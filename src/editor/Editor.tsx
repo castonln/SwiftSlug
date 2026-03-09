@@ -14,6 +14,7 @@ import parseFdx from '../parser/parsefdx';
 import Italic from '@tiptap/extension-italic';
 import Bold from '@tiptap/extension-bold';
 import Underline from '@tiptap/extension-underline';
+import parseFountain from '../parser/parsefountain';
 
 function Editor() {
   const editor = useEditor({
@@ -47,10 +48,15 @@ function Editor() {
   useEffect(() => {
     if (!editor) return;
 
-    fetch('/script-srcs/Big-Fish.fdx')        // file must be in /public
+    fetch('/script-srcs/Big-Fish.fountain')
       .then(res => res.text())
       .then(text => {
-        const { blocks } = parseFdx(text)
+        console.log('Fetched text length:', text.length)          // is the file arriving?
+
+        const { blocks } = parseFountain(text)
+        console.log('Parsed blocks:', blocks.length)              // are blocks being produced?
+        console.log('First block:', blocks[0])                    // does the shape look right?
+
         editor.commands.setContent({
           type: 'doc',
           content: blocks.map(block => ({
@@ -59,8 +65,10 @@ function Editor() {
             content: block.content
           }))
         })
+
+        console.log('Editor JSON after setContent:', editor.getJSON())  // did TipTap accept it?
       })
-      .catch(err => console.error('Failed to load FDX:', err))
+      .catch(err => console.error('Failed to load Fountain:', err))
 
   }, [editor])  // runs once when editor is ready
 
