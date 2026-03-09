@@ -1,0 +1,46 @@
+.editor-container {
+  max-width: 816px;
+  /* US Letter width at 96dpi */
+  margin: 40px auto;
+  /* centered on the page */
+  padding: 96px;
+  /* 1 inch margins */
+  background: white;
+  color: #000;
+  min-height: 1056px;
+  /* US Letter height */
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-size: 12pt;
+  line-height: 1.5;
+}
+
+.tiptap {
+  outline: none;
+  /* removes the default focus ring */
+  min-height: 864px;
+  /* page height minus padding */
+}
+
+[data-type="scene-heading"] {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+[data-type="character"] {
+  text-transform: uppercase;
+  text-align: center;
+}
+
+[data-type="dialogue"] {
+  text-align: center;
+}
+
+[data-type="parenthetical"] {
+  text-align: center;
+}
+
+[data-type="transition"] {
+  text-transform: uppercase;
+  text-align: end;
+}
