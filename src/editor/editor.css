@@ -1,46 +1,58 @@
 .editor-container {
-  max-width: 816px;
-  /* US Letter width at 96dpi */
-  margin: 40px auto;
-  /* centered on the page */
-  padding: 96px;
-  /* 1 inch margins */
-  background: white;
-  color: #000;
-  min-height: 1056px;
-  /* US Letter height */
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+
+  /* Screenplay Dimensions */
+  width: 8.5in;
+  min-height: 11in;
+  /* min-height now to expand. TODO: add pagination */
+  padding-top: 1in;
   font-family: 'Courier Prime', 'Courier New', monospace;
   font-size: 12pt;
-  line-height: 1.5;
+  line-height: 1;
+  /* 6 lines per in */
+
+  /* Page Aspects */
+  background: white;
+  color: #000;
+  margin: 40px auto;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
 .tiptap {
   outline: none;
-  /* removes the default focus ring */
-  min-height: 864px;
-  /* page height minus padding */
 }
 
+/* Screenwriting Elements */
+
 [data-type="scene-heading"] {
+  padding-left: 1.5in;
   font-weight: bold;
   text-transform: uppercase;
+  margin-bottom: 1lh;
+}
+
+[data-type="action"] {
+  padding-left: 1.5in;
+  padding-right: 1in;
+  margin-bottom: 1lh;
 }
 
 [data-type="character"] {
+  padding-left: 3.5in;
   text-transform: uppercase;
-  text-align: center;
 }
 
 [data-type="dialogue"] {
-  text-align: center;
+  padding-left: 2.5in;
+  padding-right: 3in;
+  margin-bottom: 1lh;
 }
 
 [data-type="parenthetical"] {
-  text-align: center;
+  padding-left: 3in;
 }
 
 [data-type="transition"] {
+  padding-left: 6in;
   text-transform: uppercase;
-  text-align: end;
+  margin-bottom: 1lh;
 }
