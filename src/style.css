@@ -1,5 +1,33 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Courier Screenplay';
+  src: url('/fonts/CourierScreenplay.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Courier Screenplay';
+  src: url('/fonts/CourierScreenplay-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Courier Screenplay';
+  src: url('/fonts/CourierScreenplay-Italic.ttf') format('truetype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Courier Screenplay';
+  src: url('/fonts/CourierScreenplay-BoldItalic.ttf') format('truetype');
+  font-weight: 700;
+  font-style: italic;
+}
+
 body {
   margin: 0;
   min-height: 100vh;

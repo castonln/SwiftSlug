@@ -5,7 +5,7 @@
   min-height: 11in;
   /* min-height now to expand. TODO: add pagination */
   padding-top: 1in;
-  font-family: 'Courier Prime', monospace;
+  font-family: 'Courier Screenplay','Courier Prime', monospace;
   font-size: 12pt;
   line-height: 1;
   /* 6 lines per in */
