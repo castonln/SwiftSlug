@@ -5,7 +5,7 @@
   min-height: 11in;
   /* min-height now to expand. TODO: add pagination */
   padding-top: 1in;
-  font-family: 'Courier Prime', 'Courier New', monospace;
+  font-family: 'Courier Prime', monospace;
   font-size: 12pt;
   line-height: 1;
   /* 6 lines per in */
@@ -43,16 +43,22 @@
 
 [data-type="dialogue"] {
   padding-left: 2.5in;
-  padding-right: 3in;
+  padding-right: 2.5in;
   margin-bottom: 1lh;
+}
+
+[data-type="dialogue"]:has(+ [data-type="parenthetical"]) {
+  margin-bottom: 0;
 }
 
 [data-type="parenthetical"] {
   padding-left: 3in;
+  padding-right: 3in;
 }
 
 [data-type="transition"] {
   padding-left: 6in;
+  padding-right: 1in;
   text-transform: uppercase;
   margin-bottom: 1lh;
 }
