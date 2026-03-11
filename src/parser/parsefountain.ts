@@ -1,3 +1,5 @@
+import { NodeNames } from '../editor/nodes/utils/nodeNames'
+
 type MarkType = 'bold' | 'italic' | 'underline'
 
 interface TiptapMark {
@@ -94,7 +96,7 @@ function parseDialogueBlock(lines: string[], i: number, blocks: ScreenplayBlock[
     if (!trimmed) break
 
     if (/^\(.*\)$/.test(trimmed)) {
-      blocks.push({ type: 'parenthetical', sceneNumber: null, content: parseEmphasis(trimmed) })
+      blocks.push({ type: NodeNames.PARENTHETICAL, sceneNumber: null, content: parseEmphasis(trimmed) })
       i++
       continue
     }
@@ -121,7 +123,7 @@ function parseDialogueBlock(lines: string[], i: number, blocks: ScreenplayBlock[
     }
 
     blocks.push({
-      type: 'dialogue',
+      type: NodeNames.DIALOGUE,
       sceneNumber: null,
       content: parseEmphasis(dialogueLines.join('\n'))
     })
@@ -200,18 +202,18 @@ function parseFountain(text: string): ParsedFountain {
     if (/^=\s/.test(trimmed)) { i++; continue }
 
     if (/^>.*<$/.test(trimmed)) {
-      blocks.push({ type: 'action', sceneNumber: null, content: parseEmphasis(trimmed.slice(1, -1).trim()) })
+      blocks.push({ type: NodeNames.ACTION, sceneNumber: null, content: parseEmphasis(trimmed.slice(1, -1).trim()) })
       i++; continue
     }
 
     if (trimmed.startsWith('>') && !trimmed.endsWith('<')) {
-      blocks.push({ type: 'transition', sceneNumber: null, content: parseEmphasis(trimmed.slice(1).trim()) })
+      blocks.push({ type: NodeNames.TRANSITION, sceneNumber: null, content: parseEmphasis(trimmed.slice(1).trim()) })
       i++; continue
     }
 
     if (/^\.[A-Za-z]/.test(trimmed)) {
       const { heading, sceneNumber } = extractSceneNumber(trimmed.slice(1))
-      blocks.push({ type: 'scene_heading', sceneNumber, content: parseEmphasis(heading) })
+      blocks.push({ type: NodeNames.SCENE_HEADING, sceneNumber, content: parseEmphasis(heading) })
       i++; continue
     }
 
@@ -222,39 +224,39 @@ function parseFountain(text: string): ParsedFountain {
         actionLines.push(lines[i])
         i++
       }
-      blocks.push({ type: 'action', sceneNumber: null, content: parseEmphasis(actionLines.join('\n')) })
+      blocks.push({ type: NodeNames.ACTION, sceneNumber: null, content: parseEmphasis(actionLines.join('\n')) })
       continue
     }
 
     if (trimmed.startsWith('@')) {
       const isDual = trimmed.endsWith('^')
       const charName = trimmed.slice(1).replace(/\s*\^$/, '').trim()
-      blocks.push({ type: 'character', sceneNumber: null, content: parseEmphasis(charName), dual: isDual })
+      blocks.push({ type: NodeNames.CHARACTER, sceneNumber: null, content: parseEmphasis(charName), dual: isDual })
       i++
       i = parseDialogueBlock(lines, i, blocks)
       continue
     }
 
     if (trimmed.startsWith('~')) {
-      blocks.push({ type: 'action', sceneNumber: null, content: parseEmphasis(trimmed.slice(1).trim()) })
+      blocks.push({ type: NodeNames.ACTION, sceneNumber: null, content: parseEmphasis(trimmed.slice(1).trim()) })
       i++; continue
     }
 
     if (isSceneHeading(trimmed, lines, i)) {
       const { heading, sceneNumber } = extractSceneNumber(trimmed)
-      blocks.push({ type: 'scene_heading', sceneNumber, content: parseEmphasis(heading) })
+      blocks.push({ type: NodeNames.SCENE_HEADING, sceneNumber, content: parseEmphasis(heading) })
       i++; continue
     }
 
     if (isTransition(trimmed, lines, i)) {
-      blocks.push({ type: 'transition', sceneNumber: null, content: parseEmphasis(trimmed) })
+      blocks.push({ type: NodeNames.TRANSITION, sceneNumber: null, content: parseEmphasis(trimmed) })
       i++; continue
     }
 
     if (isCharacter(trimmed, lines, i)) {
       const isDual = trimmed.endsWith('^')
       const charName = trimmed.replace(/\s*\^$/, '').trim()
-      blocks.push({ type: 'character', sceneNumber: null, content: parseEmphasis(charName), dual: isDual })
+      blocks.push({ type: NodeNames.CHARACTER, sceneNumber: null, content: parseEmphasis(charName), dual: isDual })
       i++
       i = parseDialogueBlock(lines, i, blocks)
       continue
@@ -266,7 +268,7 @@ function parseFountain(text: string): ParsedFountain {
       actionLines.push(lines[i])
       i++
     }
-    blocks.push({ type: 'action', sceneNumber: null, content: parseEmphasis(actionLines.join('\n')) })
+    blocks.push({ type: NodeNames.ACTION, sceneNumber: null, content: parseEmphasis(actionLines.join('\n')) })
   }
 
   return { titlePage, blocks }
