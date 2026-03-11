@@ -1,17 +1,27 @@
 import { Node } from '@tiptap/core';
+import { createNodeHelpers } from './utils/nodeHelpers';
+import { NodeNames } from './utils/nodeNames';
 
 const Parenthetical = Node.create({
-  name: 'parenthetical',
+  name: NodeNames.PARENTHETICAL,
   group: 'screenplay_block',
   content: 'inline*',
 
   parseHTML() {
-    return [{ tag: 'p[data-type="parenthetical"]' }]
+    return [{ tag: `p[data-type="${NodeNames.PARENTHETICAL}"]` }]
   },
 
   renderHTML() {
-    return ['p', { 'data-type': 'parenthetical' }, 0]
+    return ['p', { 'data-type': `${NodeNames.PARENTHETICAL}` }, 0]
   },
+
+  addKeyboardShortcuts() {
+    const { createNode } = createNodeHelpers(this.editor, this.name);
+
+    return {
+      Enter: () => createNode(NodeNames.DIALOGUE)
+    }
+  }
 });
 
 export default Parenthetical;

@@ -1,7 +1,9 @@
 import { Node } from '@tiptap/core';
+import { createNodeHelpers } from './utils/nodeHelpers';
+import { NodeNames } from './utils/nodeNames';
 
 const SceneHeading = Node.create({
-  name: 'scene_heading',
+  name: NodeNames.SCENE_HEADING,
   group: 'screenplay_block',
   content: 'inline*',
 
@@ -10,12 +12,20 @@ const SceneHeading = Node.create({
   },
 
   parseHTML() {
-    return [{ tag: 'p[data-type="scene-heading"]' }]
+    return [{ tag: `p[data-type="${NodeNames.SCENE_HEADING}"]` }]
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ['p', { 'data-type': 'scene-heading', ...HTMLAttributes }, 0]
+    return ['p', { 'data-type': `${NodeNames.SCENE_HEADING}`, ...HTMLAttributes }, 0]
   },
+
+  addKeyboardShortcuts() {
+    const { createNode } = createNodeHelpers(this.editor, this.name);
+
+    return {
+      Enter: () => createNode(NodeNames.ACTION)
+    }
+  }
 });
 
 export default SceneHeading;
