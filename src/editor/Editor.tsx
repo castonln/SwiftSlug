@@ -1,20 +1,21 @@
+import Bold from '@tiptap/extension-bold';
+import Italic from '@tiptap/extension-italic';
 import { Text } from '@tiptap/extension-text';
+import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 import { useEffect } from 'react';
+import { PaginationPlus } from 'tiptap-pagination-plus';
+import parseFountain from '../parser/parsefountain';
 import '../style.css';
 import './editor.css';
 import Action from './nodes/Action';
 import Character from './nodes/Character';
-import Document from './nodes/Document';
-import SceneHeading from './nodes/SceneHeading';
 import Dialogue from './nodes/Dialogue';
+import Document from './nodes/Document';
 import Parenthetical from './nodes/Parenthetical';
+import SceneHeading from './nodes/SceneHeading';
 import Transition from './nodes/Transition';
-import parseFdx from '../parser/parsefdx';
-import Italic from '@tiptap/extension-italic';
-import Bold from '@tiptap/extension-bold';
-import Underline from '@tiptap/extension-underline';
-import parseFountain from '../parser/parsefountain';
+import inchesToPixels from './nodes/utils/inchesToPixels';
 
 function Editor() {
   const editor = useEditor({
@@ -30,6 +31,21 @@ function Editor() {
       Bold,
       Italic,
       Underline,
+      PaginationPlus.configure({
+        pageHeight: inchesToPixels(11),
+        pageWidth: inchesToPixels(8.5),         // standard Letter paper dimensions
+        marginLeft: 0,                          // offload this to each data-type CSS
+        marginRight: 0,                         // offload this to each data-type CSS
+        marginTop: inchesToPixels(0.5),         // margin before header (page number)
+        contentMarginTop: inchesToPixels(0.5),  // margin after header (page number)
+        contentMarginBottom: inchesToPixels(1),
+        headerRight: "<div style='margin-right: 1in; cursor: default;'>{page}.</div>",
+        footerRight: "",                        // this is set by default, so we empty it
+        pageGap: 50,
+        pageGapBorderSize: 1,
+        pageGapBorderColor: "#e5e5e5",
+        pageBreakBackground: "#242424",
+      })
     ],
     content: {
       type: 'doc',
@@ -73,9 +89,7 @@ function Editor() {
   }, [editor])  // runs once when editor is ready
 
   return (
-    <div className="editor-container">
-      <EditorContent editor={editor} spellCheck={false} />
-    </div>
+    <EditorContent editor={editor} spellCheck={false} />
   );
 }
 

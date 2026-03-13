@@ -1,24 +1,15 @@
-.editor-container {
-
-  /* Screenplay Dimensions */
-  width: 8.5in;
-  min-height: 11in;
-  /* min-height now to expand. TODO: add pagination */
-  padding-top: 1in;
-  font-family: 'Courier Screenplay','Courier Prime', monospace;
-  font-size: 12pt;
-  line-height: 1;
-  /* 6 lines per in */
+.tiptap {
+  outline: none;
 
   /* Page Aspects */
   background: white;
   color: #000;
   margin: 40px auto;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
-}
 
-.tiptap {
-  outline: none;
+  /* Screenplay Format*/
+  font-family: 'Courier Screenplay', 'Courier Prime', monospace;
+  font-size: 12pt;
+  line-height: 1;
 }
 
 /* Screenwriting Elements */
@@ -43,7 +34,7 @@
 
 [data-type="dialogue"] {
   padding-left: 2.5in;
-  padding-right: 2.5in;
+  padding-right: 3in;
   margin-bottom: 1lh;
 }
 
@@ -61,4 +52,13 @@
   padding-right: 1in;
   text-transform: uppercase;
   margin-bottom: 1lh;
+}
+
+/* Spaghetti code nonsense to try and remove the pointer from tiptap-pagination-plus*/
+.rm-page-header.rm-page-header-0 {
+  cursor: text !important;
+}
+
+.rm-page-footer.rm-page-footer-0 {
+  cursor: text !important;
 }
