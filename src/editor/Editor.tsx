@@ -5,7 +5,6 @@ import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 import { useEffect } from 'react';
 import { PaginationPlus } from 'tiptap-pagination-plus';
-import parseFountain from '../parser/parsefountain';
 import '../style.css';
 import './editor.css';
 import Action from './nodes/Action';
@@ -16,8 +15,13 @@ import Parenthetical from './nodes/Parenthetical';
 import SceneHeading from './nodes/SceneHeading';
 import Transition from './nodes/Transition';
 import inchesToPixels from './nodes/utils/inchesToPixels';
+import type { ScreenplayBlock } from './interfaces/screenplayBlock';
 
-function Editor() {
+interface EditorProps {
+  blocks: ScreenplayBlock[]
+}
+
+function Editor({ blocks }: EditorProps) {
   const editor = useEditor({
     extensions: [
       Document,
@@ -60,37 +64,21 @@ function Editor() {
       }
     }
   });
-
   useEffect(() => {
-    if (!editor) return;
-
-    fetch('/script-srcs/Big-Fish.fountain')
-      .then(res => res.text())
-      .then(text => {
-        console.log('Fetched text length:', text.length)          // is the file arriving?
-
-        const { blocks } = parseFountain(text)
-        console.log('Parsed blocks:', blocks.length)              // are blocks being produced?
-        console.log('First block:', blocks[0])                    // does the shape look right?
-
-        editor.commands.setContent({
-          type: 'doc',
-          content: blocks.map(block => ({
-            type: block.type,
-            attrs: { sceneNumber: block.sceneNumber },
-            content: block.content
-          }))
-        })
-
-        console.log('Editor JSON after setContent:', editor.getJSON())  // did TipTap accept it?
-      })
-      .catch(err => console.error('Failed to load Fountain:', err))
-
-  }, [editor])  // runs once when editor is ready
+    if (!editor || blocks.length === 0) return
+    editor.commands.setContent({
+      type: 'doc',
+      content: blocks.map(block => ({
+        type: block.type,
+        attrs: { sceneNumber: block.sceneNumber },
+        content: block.content
+      }))
+    })
+  }, [editor, blocks])
 
   return (
     <EditorContent editor={editor} spellCheck={false} />
-  );
+  )
 }
 
 export default Editor;

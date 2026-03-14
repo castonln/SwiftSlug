@@ -1,4 +1,4 @@
-import { NodeNames } from '../editor/nodes/utils/nodeNames'
+import { NodeNames } from '../editor/constants/nodeNames'
 
 type MarkType = 'bold' | 'italic' | 'underline'
 
@@ -132,11 +132,19 @@ function parseDialogueBlock(lines: string[], i: number, blocks: ScreenplayBlock[
   return i
 }
 
-const TITLE_PAGE_KEYS = new Set([
-  'title', 'credit', 'author', 'authors', 'source',
-  'draft date', 'date', 'contact', 'copyright', 'notes',
-  'revision', 'watermark', 'font', 'format'
-])
+const titleKeyMap: Record<string, string> = {
+  'title':      'title',
+  'credit':     'credit',
+  'author':     'author',
+  'authors':    'author',
+  'source':     'source',
+  'draft date': 'date',
+  'date':       'date',
+  'contact':    'contact',
+  'copyright':  'copyright',
+  'notes':      'notes',
+  'revision':   'notes',
+}
 
 function parseTitlePage(text: string): { titlePage: TitlePage; rest: string } {
   const titlePage: TitlePage = {}
@@ -144,7 +152,7 @@ function parseTitlePage(text: string): { titlePage: TitlePage; rest: string } {
 
   const firstKeyMatch = lines[0]?.trim().match(/^([A-Za-z][A-Za-z\s]*):\s*(.*)/)
   const firstKey = firstKeyMatch?.[1]?.toLowerCase().trim()
-  if (!firstKey || !TITLE_PAGE_KEYS.has(firstKey)) {
+  if (!firstKey || !titleKeyMap[firstKey]) {
     return { titlePage, rest: text }
   }
 
@@ -164,9 +172,10 @@ function parseTitlePage(text: string): { titlePage: TitlePage; rest: string } {
 
     const keyMatch = line.match(/^([A-Za-z][A-Za-z\s]*):\s*(.*)/)
     if (keyMatch) {
-      const key = keyMatch[1].toLowerCase().trim()
-      if (!TITLE_PAGE_KEYS.has(key)) break
-      currentKey = key
+      const rawKey = keyMatch[1].toLowerCase().trim()
+      const mappedKey = titleKeyMap[rawKey]
+      if (!mappedKey) break
+      currentKey = mappedKey
       titlePage[currentKey] = keyMatch[2].trim()
     } else if (/^(\s{3,}|\t)/.test(line) && currentKey) {
       titlePage[currentKey] = titlePage[currentKey]

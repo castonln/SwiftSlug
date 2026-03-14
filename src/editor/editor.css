@@ -12,6 +12,17 @@
   line-height: 1;
 }
 
+/* Title Page */
+.tiptap.ProseMirror:not(.rm-with-pagination) {
+  height: 11in;
+  width: 8.5in;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 1in;
+  box-sizing: border-box;
+}
+
 /* Screenwriting Elements */
 
 [data-type="scene-heading"] {
@@ -52,6 +63,25 @@
   padding-right: 1in;
   text-transform: uppercase;
   margin-bottom: 1lh;
+}
+
+[data-type="title-page-title"] {
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 1lh;
+  margin-top: 3in;
+}
+
+[data-type="title-page-credit"],
+[data-type="title-page-author"],
+[data-type="title-page-source"] {
+  text-align: center;
+  margin-bottom: 1lh;
+}
+
+[data-type="title-page-source"] {
+  flex-grow: 1;
 }
 
 /* Spaghetti code nonsense to try and remove the pointer from tiptap-pagination-plus*/
