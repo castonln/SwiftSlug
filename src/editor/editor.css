@@ -1,10 +1,13 @@
+/* Editor */
 .tiptap {
   outline: none;
 
   /* Page Aspects */
   background: white;
   color: #000;
-  margin: 40px auto;
+  margin-top: 50px;
+  margin-right: 40px;
+  margin-left: 20px;
 
   /* Screenplay Format*/
   font-family: 'Courier Screenplay', 'Courier Prime', monospace;
@@ -23,13 +26,27 @@
   box-sizing: border-box;
 }
 
-/* Screenwriting Elements */
+/* Screenplay Nodes */
 
 [data-type="scene-heading"] {
   padding-left: 1.5in;
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 1lh;
+  position: relative;   /* For the heading numbers */
+  scroll-margin-top: 1lh;
+}
+
+[data-type="scene-heading"][data-scene-number]::before {
+  content: attr(data-scene-number);
+  position: absolute;
+  left: 0.75in;
+}
+
+[data-type="scene-heading"][data-scene-number]::after {
+  content: attr(data-scene-number);
+  position: absolute;
+  right: 1in;
 }
 
 [data-type="action"] {
@@ -64,6 +81,8 @@
   text-transform: uppercase;
   margin-bottom: 1lh;
 }
+
+/* Title Page Nodes */
 
 [data-type="title-page-title"] {
   text-align: center;

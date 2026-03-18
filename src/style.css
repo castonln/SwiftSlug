@@ -33,3 +33,8 @@ body {
   min-height: 100vh;
   background-color: #242424;
 }
+
+.editor-container {
+  display: flex;
+  justify-content: space-evenly;
+}

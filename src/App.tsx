@@ -3,6 +3,7 @@ import Editor from './editor/Editor'
 import type { ScreenplayBlock } from './editor/interfaces/screenplayBlock'
 import TitlePageEditor from './editor/TitlePageEditor'
 import parseFountain from './parser/parsefountain'
+import Navigator from './navigator/Navigator'
 
 interface TitlePageData {
     title: string
@@ -64,8 +65,13 @@ const App = () => {
             </div>
 
             {/* Document */}
-            <TitlePageEditor data={titlePage} />
-            <Editor blocks={blocks} />
+            <div className='editor-container'>
+                <Navigator />
+                <div style={{ marginTop: '50px', marginBottom: '100px' }}>
+                    <TitlePageEditor data={titlePage} />
+                    <Editor blocks={blocks} />
+                </div>
+            </div>
         </>
     )
 }
