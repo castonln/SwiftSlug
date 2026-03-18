@@ -17,9 +17,9 @@ import Document from './nodes/Document'
 import Parenthetical from './nodes/Parenthetical'
 import SceneHeading from './nodes/SceneHeading'
 import Transition from './nodes/Transition'
-import inchesToPixels from './nodes/utils/inchesToPixels'
-import getSceneHeadings from './nodes/utils/getSceneHeadings'
 import { NodeNames } from './constants/nodeNames'
+import inchesToPixels from './utils/inchesToPixels'
+import getSceneHeadings from './utils/getSceneHeadings'
 
 interface EditorProps {
   blocks: ScreenplayBlock[]

@@ -1,5 +1,5 @@
 import { Node } from '@tiptap/core';
-import { createNodeHelpers } from './utils/nodeHelpers';
+import { createNodeHelpers } from '../utils/nodeHelpers';
 import { NodeNames } from '../constants/nodeNames';
 
 const Character = Node.create({

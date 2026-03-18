@@ -1,6 +1,6 @@
 import { Node } from '@tiptap/core';
 import { NodeNames } from '../constants/nodeNames';
-import { createNodeHelpers } from './utils/nodeHelpers';
+import { createNodeHelpers } from '../utils/nodeHelpers';
 
 const Transition = Node.create({
   name: NodeNames.TRANSITION,

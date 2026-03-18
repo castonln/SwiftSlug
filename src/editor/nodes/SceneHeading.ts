@@ -1,6 +1,6 @@
 import { Node } from '@tiptap/core';
-import { createNodeHelpers } from './utils/nodeHelpers';
 import { NodeNames } from '../constants/nodeNames';
+import { createNodeHelpers } from '../utils/nodeHelpers';
 
 const SceneHeading = Node.create({
   name: NodeNames.SCENE_HEADING,
