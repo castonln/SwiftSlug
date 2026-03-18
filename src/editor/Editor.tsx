@@ -3,13 +3,12 @@ import Italic from '@tiptap/extension-italic'
 import { Text } from '@tiptap/extension-text'
 import Underline from '@tiptap/extension-underline'
 import { EditorContent, useEditor } from '@tiptap/react'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { PaginationPlus } from 'tiptap-pagination-plus'
 import '../style.css'
-import { NodeNames } from './constants/nodeNames'
 import './editor.css'
-import { useEditorSettings, type NavigatorItem, type SceneHeading as SceneHeadingType } from './EditorContext'
-import SceneProcessing from './extensions/sceneProcessing'
+import { useEditorSettings } from './EditorContext'
+import SceneNumbers from './extensions/sceneProcessing'
 import type { ScreenplayBlock } from './interfaces/screenplayBlock'
 import Action from './nodes/Action'
 import Character from './nodes/Character'
@@ -19,42 +18,15 @@ import Parenthetical from './nodes/Parenthetical'
 import SceneHeading from './nodes/SceneHeading'
 import Transition from './nodes/Transition'
 import inchesToPixels from './nodes/utils/inchesToPixels'
+import getSceneHeadings from './nodes/utils/getSceneHeadings'
+import { NodeNames } from './constants/nodeNames'
 
 interface EditorProps {
   blocks: ScreenplayBlock[]
 }
 
-function Editor({ blocks }: EditorProps) {
-  const { showSceneNumbers, setNavigatorItems, navigatorItems, setEditor } = useEditorSettings()
-  const previousSceneCount = useRef(0)
-
-  const navigatorItemsRef = useRef(navigatorItems)
-  useEffect(() => {
-    navigatorItemsRef.current = navigatorItems
-  }, [navigatorItems])
-
-  const handleScenesUpdated = (scenes: SceneHeadingType[]) => {
-    setNavigatorItems((prev: NavigatorItem[]) => {
-      const result: NavigatorItem[] = []
-      let sceneIndex = 0
-
-      prev.forEach((item: NavigatorItem) => {
-        if (item.type === 'divider') {
-          result.push(item)
-        } else {
-          const freshScene = scenes[sceneIndex]
-          if (freshScene) result.push(freshScene)
-          sceneIndex++
-        }
-      })
-
-      while (sceneIndex < scenes.length) {
-        result.push(scenes[sceneIndex++])
-      }
-
-      return result
-    })
-  }
+function EditorComponent({ blocks }: EditorProps) {
+  const { showSceneNumbers, setEditor, setSceneHeadings } = useEditorSettings()
 
   const editor = useEditor({
     extensions: [
@@ -69,7 +41,7 @@ function Editor({ blocks }: EditorProps) {
       Bold,
       Italic,
       Underline,
-      SceneProcessing.configure({ onScenesUpdated: handleScenesUpdated }),
+      SceneNumbers,
       PaginationPlus.configure({
         pageHeight: inchesToPixels(11),
         pageWidth: inchesToPixels(8.5),
@@ -88,7 +60,7 @@ function Editor({ blocks }: EditorProps) {
     ],
     content: {
       type: 'doc',
-      content: []
+      content: [{ type: NodeNames.SCENE_HEADING, text: '' }]
     },
     editorProps: {
       handleKeyDown(_, event) {
@@ -99,11 +71,7 @@ function Editor({ blocks }: EditorProps) {
       }
     },
     onUpdate({ editor }) {
-      const currentScenes = editor.state.doc.content.content.filter(
-        node => node.type.name === NodeNames.SCENE_HEADING
-      )
-
-      previousSceneCount.current = currentScenes.length
+      setSceneHeadings(getSceneHeadings(editor))
     }
   })
 
@@ -121,6 +89,7 @@ function Editor({ blocks }: EditorProps) {
         content: block.content
       }))
     })
+    setSceneHeadings(getSceneHeadings(editor))
   }, [editor, blocks])
 
   useEffect(() => {
@@ -133,4 +102,4 @@ function Editor({ blocks }: EditorProps) {
   )
 }
 
-export default Editor
+export default EditorComponent

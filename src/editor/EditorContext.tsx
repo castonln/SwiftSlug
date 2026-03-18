@@ -3,27 +3,18 @@ import type { Editor } from '@tiptap/core'
 
 export interface SceneHeading {
   type: 'scene'
-  id: string        // use pos as string id
   number: number
   text: string
   pos: number
 }
 
-export interface ActDivider {
-  type: 'divider'
-  id: string
-  label: string
-}
-
-export type NavigatorItem = SceneHeading | ActDivider
-
 interface EditorSettings {
   showSceneNumbers: boolean
   setShowSceneNumbers: (val: boolean) => void
-  navigatorItems: NavigatorItem[]
-  setNavigatorItems: React.Dispatch<React.SetStateAction<NavigatorItem[]>>
   editor: Editor | null
   setEditor: (editor: Editor | null) => void
+  sceneHeadings: SceneHeading[]
+  setSceneHeadings: React.Dispatch<React.SetStateAction<SceneHeading[]>>
 }
 
 const EditorContext = createContext<EditorSettings | null>(null)
@@ -31,13 +22,13 @@ const EditorContext = createContext<EditorSettings | null>(null)
 export function EditorProvider({ children }: { children: React.ReactNode }) {
   const [showSceneNumbers, setShowSceneNumbers] = useState(false)
   const [editor, setEditor] = useState<Editor | null>(null)
-  const [navigatorItems, setNavigatorItems] = useState<NavigatorItem[]>([])
+  const [sceneHeadings, setSceneHeadings] = useState<SceneHeading[]>([])
 
   return (
     <EditorContext.Provider value={{
       showSceneNumbers, setShowSceneNumbers, 
       editor, setEditor, 
-      navigatorItems, setNavigatorItems
+      sceneHeadings, setSceneHeadings
     }}>
       {children}
     </EditorContext.Provider>

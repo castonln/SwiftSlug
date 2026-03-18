@@ -1,16 +1,23 @@
-import type { SceneHeading } from "../../editor/EditorContext";
+import { type Ref } from 'react'
+import type { SceneHeading } from "../../editor/EditorContext"
 
 interface SceneItemProps {
   item: SceneHeading
   onJump: (scene: SceneHeading) => void
+  className?: string
+  ref?: Ref<HTMLDivElement>
 }
 
-function SceneItem({ item, onJump }: SceneItemProps) {
+function SceneItem({ item, onJump, className, ref }: SceneItemProps) {
   return (
-    <div className="scene-shortcut" onClick={() => onJump(item)}>
+    <div
+      ref={ref}
+      className={`scene-shortcut ${className ?? ''}`}
+      onClick={() => onJump(item)}
+    >
       <strong>{item.number}.</strong> {item.text}
     </div>
   )
 }
 
-export default SceneItem;
+export default SceneItem

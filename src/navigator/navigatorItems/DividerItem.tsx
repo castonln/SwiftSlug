@@ -12,17 +12,17 @@ interface DividerItemProps {
 function DividerItem({ item, onLabelChange, onRemove, onDragStart, onDragEnd, isDragging }: DividerItemProps) {
   return (
     <div className={`act-divider ${isDragging ? 'act-divider--dragging' : ''}`}>
+      <input
+        className="act-divider-label"
+        value={item.label}
+        onChange={e => onLabelChange(item.id, e.target.value)}
+      />
       <span
         className="act-divider-handle"
         draggable
         onDragStart={() => onDragStart(item.id)}
         onDragEnd={onDragEnd}
       >⠿</span>
-      <input
-        className="act-divider-label"
-        value={item.label}
-        onChange={e => onLabelChange(item.id, e.target.value)}
-      />
       <button
         className="act-divider-remove"
         onClick={() => onRemove(item.id)}

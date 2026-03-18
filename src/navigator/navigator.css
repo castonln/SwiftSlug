@@ -24,6 +24,10 @@
   cursor: pointer;
 }
 
+.active-scene-shortcut {
+  text-decoration: underline;
+}
+
 .navigator-header {
   display: flex;
   justify-content: space-between;
@@ -33,91 +37,4 @@
   text-transform: uppercase;
   font-size: 9pt;
   letter-spacing: 0.05em;
-}
-
-.add-divider-btn {
-  background: #2a2a2a;
-  border: 1px solid #444;
-  color: #aaa;
-  padding: 2px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 9pt;
-}
-
-.add-divider-btn:hover {
-  background: #333;
-  color: #fff;
-}
-
-.act-divider {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin: 8px 0 4px 0;
-  border-bottom: 1px solid #00000000;
-}
-
-.act-divider:hover {
-  border-bottom: 1px solid #444;
-}
-
-.act-divider-label {
-  background: none;
-  border: none;
-  font-weight: bold;
-  font-size: 14pt;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  width: 100%;
-  outline: none;
-  font-family: inherit;
-}
-
-/* Act Divider Tools */
-
-.act-divider:active {
-  cursor: grabbing;
-}
-
-.act-divider-handle {
-  color: #555;
-  font-size: 14px;
-  flex-shrink: 0;
-  opacity: 0;
-  cursor: grab;
-}
-
-.act-divider:hover .act-divider-handle {
-  opacity: 100;
-}
-
-.act-divider-remove {
-  background: none;
-  border: none;
-  color: #555;
-  cursor: pointer;
-  font-size: 14px;
-  flex-shrink: 0;
-  padding: 0;
-  line-height: 1;
-  opacity: 0;
-}
-
-.act-divider:hover .act-divider-remove {
-  opacity: 100;
-}
-
-.act-divider-remove:hover {
-  color: #f00;
-}
-
-.drop-zone {
-  height: 4px;
-  border-radius: 2px;
-  transition: background 0.15s;
-}
-
-.drop-zone--active {
-  background: #646cff;
 }

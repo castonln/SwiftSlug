@@ -1,132 +1,81 @@
 import { useEffect, useRef, useState } from 'react'
-import { useEditorSettings, type ActDivider, type NavigatorItem, type SceneHeading } from '../editor/EditorContext'
+import { useEditorSettings, type SceneHeading } from '../editor/EditorContext'
 import './navigator.css'
 import SceneItem from './navigatorItems/SceneItem'
-import DividerItem from './navigatorItems/DividerItem'
 
 const Navigator = () => {
-    const { editor, navigatorItems, setNavigatorItems } = useEditorSettings()
-    const [draggingId, setDraggingId] = useState<string | null>(null)
-    const [dragOverIndex, setDragOverIndex] = useState<number | null>(null)
-
+    const { editor, sceneHeadings } = useEditorSettings()
+    const [activePos, setActivePos] = useState<number | null>(null)
     const navigatorRef = useRef<HTMLDivElement | null>(null)
-    const lastDividerRef = useRef<HTMLDivElement | null>(null)
-
-    // check for new dividers added and scroll to them
-    useEffect(() => {
-        const navigator = navigatorRef.current
-        const divider = lastDividerRef.current
-        if (!navigator || !divider) return
-
-        const navigatorTop = navigator.getBoundingClientRect().top
-        const dividerTop = divider.getBoundingClientRect().top
-        const offset = dividerTop - navigatorTop
-
-        navigator.scrollTo({
-            top: navigator.scrollTop + offset,
-            behavior: 'smooth'
-        })
-    }, [navigatorItems])
-
-    const lastDividerIndex = navigatorItems.reduceRight(
-        (previousValue: number, currentValue: NavigatorItem, currentIndex: number) =>
-            previousValue === -1 && currentValue.type === 'divider'
-                ? currentIndex
-                : previousValue, -1
-    )
+    const activeItemRef = useRef<HTMLDivElement | null>(null)
+    const [navigatorIsAutoScrolling, setNavigatorIsAutoScrolling] = useState<boolean>(false)
 
     const jumpToScene = (scene: SceneHeading) => {
         if (!editor) return
+
         editor.commands.setTextSelection(scene.pos)
         const dom = editor.view.nodeDOM(scene.pos) as HTMLElement | null
-        dom?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
+        if (!dom) return
 
-    const addDivider = () => {
-        const newDivider: ActDivider = {
-            type: 'divider',
-            id: crypto.randomUUID(),
-            label: `Act ${navigatorItems.filter(i => i.type === 'divider').length + 1}`
+        setNavigatorIsAutoScrolling(true)
+        dom.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        const onScrollEnd = () => {
+            setNavigatorIsAutoScrolling(false)
+            window.removeEventListener('scrollend', onScrollEnd)
         }
-        setNavigatorItems([...navigatorItems, newDivider])
+        window.addEventListener('scrollend', onScrollEnd)
     }
 
-    const updateDividerLabel = (id: string, label: string) => {
-        setNavigatorItems(navigatorItems.map(item =>
-            item.type === 'divider' && item.id === id ? { ...item, label } : item
-        ))
-    }
+    useEffect(() => {
+        if (navigatorIsAutoScrolling) return
+        const navigator = navigatorRef.current
+        const activeItem = activeItemRef.current
+        if (!navigator || !activeItem) return
 
-    const removeDivider = (id: string) => {
-        setNavigatorItems(navigatorItems.filter(item => item.id !== id))
-    }
+        activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+    }, [activePos])
 
-    const onDragStart = (id: string) => {
-        setDraggingId(id)
-    }
+    useEffect(() => {
+        if (!editor) return
 
-    const onDragOver = (e: React.DragEvent, index: number) => {
-        e.preventDefault()
-        setDragOverIndex(index)
-    }
+        const onScroll = () => {
 
-    const onDrop = (dropIndex: number) => {
-        if (!draggingId) return
+            let activeScene: SceneHeading | null = null
 
-        const fromIndex = navigatorItems.findIndex(item => item.id === draggingId)
-        if (fromIndex === -1) return
+            for (const scene of sceneHeadings) {
+                const dom = editor.view.nodeDOM(scene.pos) as HTMLElement | null
+                if (!dom) continue
 
-        const updated = [...navigatorItems]
-        const [removed] = updated.splice(fromIndex, 1)
-        const adjustedIndex = fromIndex < dropIndex ? dropIndex - 1 : dropIndex
-        updated.splice(adjustedIndex, 0, removed)
+                const rect = dom.getBoundingClientRect()
+                if (rect.top <= 16) {
+                    activeScene = scene
+                }
+            }
 
-        setNavigatorItems(updated)
-        setDraggingId(null)
-        setDragOverIndex(null)
-    }
+            if (activeScene) setActivePos(activeScene.pos)
+        }
+        window.addEventListener('scroll', onScroll, { passive: true })
 
-    const onDragEnd = () => {
-        setDraggingId(null)
-        setDragOverIndex(null)
-    }
+        return () => {
+            window.removeEventListener('scroll', onScroll)
+        }
+    }, [editor, sceneHeadings])
 
     return (
         <div className='navigator' ref={navigatorRef}>
             <div className="navigator-header">
                 <span>Scenes</span>
-                <button className="add-divider-btn" onClick={addDivider}>+ Act</button>
             </div>
-
-            {navigatorItems.map((item, index) => {
-                const isLastDivider = item.type === 'divider' && lastDividerIndex === index
-
+            {sceneHeadings.map((scene) => {
+                const isActive = scene.pos === activePos
                 return (
-                    <div
-                        key={item.id}
-                        ref={isLastDivider ? lastDividerRef : null}
-                        onDragOver={e => onDragOver(e, index)}
-                        onDragLeave={() => setDragOverIndex(null)}
-                        onDrop={() => onDrop(index)}
-                    >
-                        <div className={`drop-zone ${dragOverIndex === index ? 'drop-zone--active' : ''}`} />
-
-                        {item.type === 'divider' ? (
-                            <DividerItem
-                                item={item}
-                                onLabelChange={updateDividerLabel}
-                                onRemove={removeDivider}
-                                onDragStart={onDragStart}
-                                onDragEnd={onDragEnd}
-                                isDragging={draggingId === item.id}
-                            />
-                        ) : (
-                            <SceneItem
-                                item={item}
-                                onJump={jumpToScene}
-                            />
-                        )}
-                    </div>
+                    <SceneItem
+                        key={scene.pos}
+                        ref={isActive ? activeItemRef : null}
+                        item={scene}
+                        onJump={jumpToScene}
+                        className={isActive ? 'active-scene-shortcut' : ''}
+                    />
                 )
             })}
         </div>
