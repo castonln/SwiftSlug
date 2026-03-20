@@ -31,8 +31,67 @@
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: #242424;
+  background-color: rgb(248, 250, 253);
 }
+
+/* Print / PDF */
+@media print {
+
+  body * {
+    visibility: hidden;
+  }
+
+  .tiptap.ProseMirror,
+  .tiptap.ProseMirror * {
+    visibility: visible !important;
+  }
+
+  .rm-pages-wrapper,
+  .rm-page-break,
+  .rm-page-footer,
+  .rm-page-header,
+  .rm-pagination-gap,
+  .rm-first-page-header {
+    display: none !important;
+  }
+
+  .print-container {
+    position: absolute !important;
+    display: block !important;
+    top: 0;
+    left: 0;
+    width: 8.5in !important;
+    margin: 0 !important;
+  }
+
+  .tiptap.ProseMirror:not(.rm-with-pagination) {
+    position: static !important;
+    width: 8.5in !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: 0 !important;
+  }
+
+  .tiptap.ProseMirror.rm-with-pagination {
+    position: static !important;
+    width: 8.5in !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    break-before: page;
+    border: 0 !important;
+    min-height: 0 !important;
+  }
+
+  @page :first {
+    margin: 0;
+  }
+
+  @page {
+    size: Letter;
+    margin: 1in 0;
+  }
+}
+
 
 .editor-container {
   display: flex;

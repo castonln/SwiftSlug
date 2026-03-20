@@ -1,7 +1,7 @@
 
 import type { Editor } from '@tiptap/core'
 import { NodeNames } from '../constants/nodeNames'
-import type { SceneHeading } from '../EditorContext'
+import type { SceneHeading } from '../interfaces/SceneHeading'
 
 const getSceneHeadings = (editor: Editor): SceneHeading[] => {
   const scenes: SceneHeading[] = []

@@ -1,6 +1,7 @@
 /* Editor */
 .tiptap {
   outline: none;
+  border: 1px solid lightgray !important;
 
   /* Page Aspects */
   background: white;
@@ -34,7 +35,7 @@
   text-transform: uppercase;
   margin-bottom: 1lh;
   position: relative;   /* For the heading numbers */
-  scroll-margin-top: 1lh;
+  scroll-margin-top: 72px;  /* Toolbar + lh */
 }
 
 [data-type="scene-heading"][data-scene-number]::before {

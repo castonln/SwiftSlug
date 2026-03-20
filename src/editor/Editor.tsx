@@ -9,7 +9,7 @@ import '../style.css'
 import './editor.css'
 import { useEditorSettings } from './EditorContext'
 import SceneNumbers from './extensions/sceneProcessing'
-import type { ScreenplayBlock } from './interfaces/screenplayBlock'
+import type { ScreenplayBlock } from './interfaces/ScreenplayBlock'
 import Action from './nodes/Action'
 import Character from './nodes/Character'
 import Dialogue from './nodes/Dialogue'
@@ -47,15 +47,15 @@ function EditorComponent({ blocks }: EditorProps) {
         pageWidth: inchesToPixels(8.5),
         marginLeft: 0,
         marginRight: 0,
-        marginTop: inchesToPixels(0.5),
-        contentMarginTop: inchesToPixels(0.5),
-        contentMarginBottom: inchesToPixels(1),
+        marginTop: inchesToPixels(0.5),         
+        contentMarginTop: inchesToPixels(0.5) - 16,   // minus line height since page numbers
+        contentMarginBottom: inchesToPixels(1) - 20,  // i dont have an explaination for this one LMAO
         headerRight: "<div style='margin-right: 0.5in; cursor: default;'>{page}.</div>",
         footerRight: "",
         pageGap: 50,
         pageGapBorderSize: 1,
         pageGapBorderColor: "#e5e5e5",
-        pageBreakBackground: "#242424",
+        pageBreakBackground: "rgb(248, 250, 253)",
       })
     ],
     content: {

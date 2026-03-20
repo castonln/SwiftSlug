@@ -1,5 +1,5 @@
 import { type Ref } from 'react'
-import type { SceneHeading } from "../../editor/EditorContext"
+import type { SceneHeading } from '../../editor/interfaces/SceneHeading'
 
 interface SceneItemProps {
   item: SceneHeading

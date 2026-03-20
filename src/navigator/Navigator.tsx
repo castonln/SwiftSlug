@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { useEditorSettings, type SceneHeading } from '../editor/EditorContext'
+import { useEditorSettings } from '../editor/EditorContext'
 import './navigator.css'
 import SceneItem from './navigatorItems/SceneItem'
+import type { SceneHeading } from '../editor/interfaces/SceneHeading'
 
 const Navigator = () => {
     const { editor, sceneHeadings } = useEditorSettings()
@@ -47,7 +48,7 @@ const Navigator = () => {
                 if (!dom) continue
 
                 const rect = dom.getBoundingClientRect()
-                if (rect.top <= 16) {
+                if (rect.top <= 16 + 72) {  // scroll margin + lh
                     activeScene = scene
                 }
             }

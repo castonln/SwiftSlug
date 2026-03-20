@@ -1,5 +1,6 @@
 .navigator {
   background-color: white;
+  border: 1px solid lightgray;
   font-family: 'Courier Screenplay', 'Courier Prime', monospace;
   width: 100%;
   height: 500px;
