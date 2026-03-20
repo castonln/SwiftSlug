@@ -34,8 +34,10 @@
   font-weight: bold;
   text-transform: uppercase;
   margin-bottom: 1lh;
-  position: relative;   /* For the heading numbers */
-  scroll-margin-top: 72px;  /* Toolbar + lh */
+  position: relative;
+  /* For the heading numbers */
+  scroll-margin-top: 72px;
+  /* Toolbar + lh */
 }
 
 [data-type="scene-heading"][data-scene-number]::before {

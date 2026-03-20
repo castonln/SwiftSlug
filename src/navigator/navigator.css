@@ -39,3 +39,9 @@
   font-size: 9pt;
   letter-spacing: 0.05em;
 }
+
+@media screen and (max-width: 1200px) {
+  .navigator {
+    display: none;
+  }
+}
