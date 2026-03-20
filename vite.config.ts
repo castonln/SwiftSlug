@@ -7,6 +7,5 @@ export default defineConfig({
   plugins: [
     react(),
     tailwindcss(),
-  ],
-  base: "https://castonln.github.io/SwiftSlug/"
+  ]
 })
