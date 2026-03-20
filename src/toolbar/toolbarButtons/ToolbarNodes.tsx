@@ -54,6 +54,7 @@ const ToolbarNodes = () => {
             {toolbarNodes.map(({ node, label }) => {
                 return (
                     <button
+                        key={node}
                         className={`toolbar-btn ${isActive(node) ? 'toolbar-btn--active' : ''}`}
                         title={node}
                         onClick={() => setNode(node)}>
