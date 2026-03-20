@@ -51,6 +51,9 @@
   transition: background 0.15s;
   min-width: 65px;
   max-width: 132px;
+}
+
+.import-btn {
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;

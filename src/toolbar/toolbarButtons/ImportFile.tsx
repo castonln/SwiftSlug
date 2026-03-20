@@ -42,7 +42,7 @@ const ImportFile = () => {
             />
             <label
                 htmlFor='file-upload'
-                className='toolbar-btn toolbar-btn--text'>
+                className='toolbar-btn import-btn toolbar-btn--text'>
                 {fileName
                     ? fileName
                     : "Import"}
