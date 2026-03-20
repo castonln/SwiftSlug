@@ -8,7 +8,7 @@ const Action = Node.create({
   content: 'inline*',
 
   parseHTML() {
-    return [{ tag:  `p[data-type="${NodeNames.ACTION}"]` }]
+    return [{ tag: `p[data-type="${NodeNames.ACTION}"]` }]
   },
 
   renderHTML() {
@@ -32,6 +32,12 @@ const Action = Node.create({
       Tab: () => isEmpty()
         ? setNode(NodeNames.CHARACTER)
         : createNode(NodeNames.CHARACTER)
+    }
+  },
+
+  addAttributes() {
+    return {
+      manualOverride: { default: false }
     }
   }
 }

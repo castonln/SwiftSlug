@@ -10,6 +10,7 @@ const Icon = ({ fill, height, width }: IconProps) => {
         fill={fill} 
         height={`${height}px`}
         width={`${width}px`}
+        className='icon'
         version="1.1" 
         xmlns="http://www.w3.org/2000/svg" 
         viewBox="0 0 263.935 263.935" 

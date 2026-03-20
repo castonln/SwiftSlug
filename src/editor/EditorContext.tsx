@@ -5,12 +5,12 @@ import type { TitlePageData } from './interfaces/TitlePageData'
 import type { SceneHeading } from './interfaces/SceneHeading'
 
 const defaultTitlePage: TitlePageData = {
-    title: 'Title',
-    credit: 'Written by',
-    author: 'Author',
-    source: 'Source',
-    contact: 'Contact',
-    date: 'Date',
+  title: 'Title',
+  credit: 'Written by',
+  author: 'Author',
+  source: 'Source',
+  contact: 'Contact',
+  date: 'Date',
 }
 
 interface EditorSettings {
@@ -24,24 +24,28 @@ interface EditorSettings {
   setTitlePage: (val: TitlePageData) => void
   blocks: ScreenplayBlock[]
   setBlocks: (val: ScreenplayBlock[]) => void
+  activeNodeType: string | null
+  setActiveNodeType: (type: string | null) => void
 }
 
 const EditorContext = createContext<EditorSettings | null>(null)
 
 export function EditorProvider({ children }: { children: React.ReactNode }) {
-  const [showSceneNumbers, setShowSceneNumbers] = useState(false)
+  const [showSceneNumbers, setShowSceneNumbers] = useState<boolean>(false)
   const [editor, setEditor] = useState<Editor | null>(null)
   const [sceneHeadings, setSceneHeadings] = useState<SceneHeading[]>([])
   const [blocks, setBlocks] = useState<ScreenplayBlock[]>([])
   const [titlePage, setTitlePage] = useState<TitlePageData>(defaultTitlePage)
+  const [activeNodeType, setActiveNodeType] = useState<string | null>(null)
 
   return (
     <EditorContext.Provider value={{
-      showSceneNumbers, setShowSceneNumbers, 
-      editor, setEditor, 
+      showSceneNumbers, setShowSceneNumbers,
+      editor, setEditor,
       sceneHeadings, setSceneHeadings,
       blocks, setBlocks,
-      titlePage, setTitlePage
+      titlePage, setTitlePage,
+      activeNodeType, setActiveNodeType
     }}>
       {children}
     </EditorContext.Provider>

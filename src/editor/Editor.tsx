@@ -26,7 +26,7 @@ interface EditorProps {
 }
 
 function EditorComponent({ blocks }: EditorProps) {
-  const { showSceneNumbers, setEditor, setSceneHeadings } = useEditorSettings()
+  const { showSceneNumbers, setEditor, setSceneHeadings, setActiveNodeType } = useEditorSettings()
 
   const editor = useEditor({
     extensions: [
@@ -47,7 +47,7 @@ function EditorComponent({ blocks }: EditorProps) {
         pageWidth: inchesToPixels(8.5),
         marginLeft: 0,
         marginRight: 0,
-        marginTop: inchesToPixels(0.5),         
+        marginTop: inchesToPixels(0.5),
         contentMarginTop: inchesToPixels(0.5) - 16,   // minus line height since page numbers
         contentMarginBottom: inchesToPixels(1) - 20,  // i dont have an explaination for this one LMAO
         headerRight: "<div style='margin-right: 0.5in; cursor: default;'>{page}.</div>",
@@ -72,6 +72,12 @@ function EditorComponent({ blocks }: EditorProps) {
     },
     onUpdate({ editor }) {
       setSceneHeadings(getSceneHeadings(editor))
+      const type = editor.state.selection.$head.parent.type.name
+      setActiveNodeType(type)
+    },
+    onSelectionUpdate({ editor }) {
+      const type = editor.state.selection.$head.parent.type.name
+      setActiveNodeType(type)
     }
   })
 

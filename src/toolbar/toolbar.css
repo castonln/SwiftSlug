@@ -4,7 +4,7 @@
   position: fixed;
   top: 0;
   z-index: 100;
-  background-color: white;
+  background: white;
   border-bottom: 1px solid lightgray;
   display: flex;
   align-items: center;
@@ -14,10 +14,16 @@
 }
 
 .toolbar-group {
-  display: flex;
   flex: 1;
+  display: flex;
   gap: 4px;
   margin-left: 15px;
+}
+
+.icon {
+  margin-top: 2px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .toolbar-nodes {
@@ -32,51 +38,34 @@
 
 .toolbar-btn {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  padding: 4px 10px;
   border: none;
+  border-radius: 4px;
   background: transparent;
   cursor: pointer;
-  border-radius: 4px;
   font-family: inherit;
   font-size: 11pt;
-  color: #333;
-  transition: background 0.15s;
+  color: #555;
   white-space: nowrap;
+  transition: background 0.15s;
+  min-width: 65px;
 }
 
-.toolbar-btn:hover {
-  background: #f0f0f0;
-}
+.toolbar-btn:hover { background: #f0f0f0; }
 
-.toolbar-btn:active {
+.toolbar-btn--active {
   background: #e5e5e5;
   color: black;
 }
 
-.toolbar-btn {
-  padding: 4px 10px;
-  color: #555;
-  max-width: 229px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: block;
-}
+.toolbar-btn--active > svg { fill: black; }
 
-.toolbar-btn--icon {
-  flex-direction: column;
-  padding: 3px 8px;
-  font-size: 9pt;
-  gap: 2px;
-}
+.toolbar-btn__shortcut-label { font-size: 8pt; }
 
-.toolbar-btn__label {
-  line-height: 1;
-}
-
-.export-menu-container {
-  position: relative;
-}
+.export-menu-container { position: relative; }
 
 .export-menu {
   position: absolute;
@@ -104,6 +93,4 @@
   cursor: pointer;
 }
 
-.export-menu-item:hover {
-  background: #f5f5f5;
-}
+.export-menu-item:hover { background: #f5f5f5; }

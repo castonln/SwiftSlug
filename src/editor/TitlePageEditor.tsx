@@ -8,6 +8,7 @@ import {
 import PreventNodeDeletion from './extensions/preventNodeDeletion'
 import { useEffect } from 'react'
 import { TitlePageNodeNames } from './constants/titlePageNodeNames'
+import { useEditorSettings } from './EditorContext'
 
 interface TitlePageData {
   title: string
@@ -19,6 +20,7 @@ interface TitlePageData {
 }
 
 function TitlePageEditor({ data }: { data: TitlePageData }) {
+  const { setActiveNodeType } = useEditorSettings()
 
   const titlePageFields: [string, string][] = [
     [TitlePageNodeNames.TITLE, data.title],
@@ -49,6 +51,14 @@ function TitlePageEditor({ data }: { data: TitlePageData }) {
     content: {
       type: 'doc',
       content: content
+    },
+    onUpdate({ editor }) {
+      const type = editor.state.selection.$head.parent.type.name
+      setActiveNodeType(type)
+    },
+    onSelectionUpdate({ editor }) {
+      const type = editor.state.selection.$head.parent.type.name
+      setActiveNodeType(type)
     }
   })
 
