@@ -1,73 +1,46 @@
-# React + TypeScript + Vite
+<div align="center">
+  <img width="128" alt="swift-slug-icon" src="https://github.com/user-attachments/assets/ee6585ef-9870-4261-b131-53463a3471c2" />
+  <h1>SwiftSlug</h1>
+  <p>https://swift-slug.vercel.app/</p>
+  <p>A free, quick, and simple web-based word processor for screenwriting.</p>
+  <img alt="image" src="https://github.com/user-attachments/assets/6fea5273-bd54-4423-bc29-b81a0dbda579" />
+</div>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<h2>What is SwiftSlug?</h2>
+<p>I took several screenwriting classes as free electives back in college. Each semester, I wrestled with a new piece of software to get my work done. <em>Trelby, Arc Studio,</em> etc. I eventually settled on writing pure Fountain in a text document and updating a PDF exporter window every few minutes in VSCode to get a good gauge on my page lengths! What a nightmare. But hey, at least it was free. The truth is, there's few free WYSIWYG editors that just provide the bare necessities for burgeoning screenwriting students.</p>
 
-Currently, two official plugins are available:
+<p>SwiftSlug is a small project of mine that's attempting to correct that. It's a <strong>dead simple</strong> screenplay editor made to <strong>get something readable out the door ASAP</strong> right from your browser with <strong>no sign in required.</strong> If you're coming from or thinking you'll move to a different editor, you can bring your scripts with you via <strong>.fountain imports and exports,</strong> making SwiftSlug compatable with <em>Arc Studio, Fade In, Highland Pro, WriterDuet,</em> and most other industry-standard screenwriting tools.</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<h2>Development Process</h2>
+<h3>Early Wireframes</h3>
+<div float="left" align="center">
+  <img alt="image" height="320px" src="https://github.com/user-attachments/assets/b69c0f2c-67ec-4eb5-b7d6-f7bec969d6a5" />
+  <img alt="image" height="320px" src="https://github.com/user-attachments/assets/299dbb9f-dd7f-4691-b144-ac3db96d1f63" />
+</div>
+<p>My design process began on paper where I established the needs of each possible component and what the scope of my project may be.</p>
+<p>I decided to keep the design as streamlined as possible. No landing page, no sign in, no extraeous features.</p>
+<p>For the general feel, I went for sharp corners and a white emulation of paper. I wanted the app to give the impression of robustness and familiarity.</p>
+<img alt="image" height="400px" src="https://github.com/user-attachments/assets/5d4ea9d7-8ade-47a0-abc5-62e40e32e1e0" align="left" />
+<h3>Editor Node State Flow</h3>
+<p>I mapped this state diagram in trying to figure out how one editor node could reach another from any point in a document.</p>
 
-## React Compiler
+<p>This is also when I formally established my desire to keep everything feeling as "free as possible." As in, no hotkeys or mouse usage required. Everything should be naturally typed or done with single keypresses to keep editing fast.</p>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+<p>I identified how keyboard input triggered nodes (like parentheticals or scene headings) would be difficult to get right. Luckily, TipTap provided InputRules to deal with this.</p>
 
-## Expanding the ESLint configuration
+<br clear="left" />
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+<h3>Built With</h3>
+<ul>
+  <li><strong>Vercel</strong> for deployment</li>
+  <li><strong>React + Vite</strong> for frontend library / framework</li>
+  <li><strong>TipTap + ProseMirror</strong> for editor framework</li>
+</ul>
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# Roadmap
+- [x] Single page implementation
+- [x] Deployment to Vercel
+- [ ] Add MongoDB backend and Firebase *optional* login for free cloud backups
+- [ ] Dark mode
+- [ ] Reimplement pagination instead of using library for greater flexibility when exporting to pdf
+- [ ] Suggestion bubble for scene headings and characters
