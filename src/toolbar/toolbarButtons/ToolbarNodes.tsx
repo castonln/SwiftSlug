@@ -1,17 +1,11 @@
 import { useEditorSettings } from '../../editor/EditorContext'
-import { NODE_TRANSITIONS } from '../../editor/constants/transitionMap'
 import { NodeNames } from '../../editor/constants/nodeNames'
+import { NODE_TRANSITIONS } from '../../editor/constants/transitionMap'
 import CharacterSvg from '../icon/CharacterSvg'
 import DialogueSvg from '../icon/DialogueSvg'
-import { useEffect } from 'react'
 
 const ToolbarNodes = () => {
     const { activeNodeType, editor } = useEditorSettings()
-
-    useEffect(() => {
-        console.log(activeNodeType)
-    }, [activeNodeType])
-
     const transitions = activeNodeType ? NODE_TRANSITIONS[activeNodeType] ?? {} : {}
 
     const shortcut = (nodeType: string) => transitions[nodeType] ?? null
