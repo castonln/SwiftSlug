@@ -14,8 +14,8 @@
 <h2>Development Process</h2>
 <h3>Early Wireframes</h3>
 <div float="left" align="center">
-  <img alt="image" height="320px" src="https://github.com/user-attachments/assets/b69c0f2c-67ec-4eb5-b7d6-f7bec969d6a5" />
-  <img alt="image" height="320px" src="https://github.com/user-attachments/assets/299dbb9f-dd7f-4691-b144-ac3db96d1f63" />
+  <img alt="image" width="400px" src="https://github.com/user-attachments/assets/b69c0f2c-67ec-4eb5-b7d6-f7bec969d6a5" />
+  <img alt="image" width="400px" src="https://github.com/user-attachments/assets/299dbb9f-dd7f-4691-b144-ac3db96d1f63" />
 </div>
 <p>My design process began on paper where I established the needs of each possible component and what the scope of my project may be.</p>
 <p>I decided to keep the design as streamlined as possible. No landing page, no sign in, no extraeous features.</p>
