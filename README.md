@@ -7,6 +7,8 @@
 </div>
 
 <h2>What is SwiftSlug?</h2>
+<strong>Swift -> <em>Fast</em></strong><br>
+<strong>Slug -> <em>Sluglines</em></strong><br><br>
 <p>I took several screenwriting classes as free electives back in college. Each semester, I wrestled with a new piece of software to get my work done. <em>Trelby, Arc Studio,</em> etc. I eventually settled on writing pure Fountain in a text document and updating a PDF exporter window every few minutes in VSCode to get a good gauge on my page lengths! What a nightmare. But hey, at least it was free. The truth is, there's few free WYSIWYG editors that just provide the bare necessities for burgeoning screenwriting students.</p>
 
 <p>SwiftSlug is a small project of mine that's attempting to correct that. It's a <strong>dead simple</strong> screenplay editor made to <strong>get something readable out the door ASAP</strong> right from your browser with <strong>no sign in required.</strong> If you're coming from or thinking you'll move to a different editor, you can bring your scripts with you via <strong>.fountain imports and exports,</strong> making SwiftSlug compatable with <em>Arc Studio, Fade In, Highland Pro, WriterDuet,</em> and most other industry-standard screenwriting tools.</p>
