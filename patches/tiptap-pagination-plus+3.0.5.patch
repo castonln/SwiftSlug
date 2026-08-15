@@ -1,0 +1,35 @@
+diff --git a/node_modules/tiptap-pagination-plus/dist/PaginationPlus.js b/node_modules/tiptap-pagination-plus/dist/PaginationPlus.js
+index 52bd368..63ab0ac 100644
+--- a/node_modules/tiptap-pagination-plus/dist/PaginationPlus.js
++++ b/node_modules/tiptap-pagination-plus/dist/PaginationPlus.js
+@@ -202,8 +202,18 @@ export const PaginationPlus = Extension.create({
+                         };
+                     },
+                     apply: (tr, oldDeco, oldState, newState) => {
+-                        const pageCount = calculatePageCount(editor.view, this.options);
+-                        const currentPageCount = getExistingPageCount(editor.view);
++                        if (editor.isDestroyed) {
++                            return oldDeco;
++                        }
++                        let pageCount, currentPageCount;
++                        try {
++                            pageCount = calculatePageCount(editor.view, this.options);
++                            currentPageCount = getExistingPageCount(editor.view);
++                        }
++                        catch (e) {
++                            // editor.view not available yet (not mounted) or already torn down
++                            return oldDeco;
++                        }
+                         const getNewDecoration = () => {
+                             updateCssVariables(editor.view.dom, this.options);
+                             let headerHeight = "headerHeight" in this.storage ? this.storage.headerHeight : new Map();
+@@ -250,6 +260,9 @@ export const PaginationPlus = Extension.create({
+                             const currentPageCount = getExistingPageCount(view);
+                             const triggerUpdate = (_footerHeight) => {
+                                 requestAnimationFrame(() => {
++                                    if (editor.isDestroyed) {
++                                        return;
++                                    }
+                                     const tr = view.state.tr.setMeta(page_count_meta_key, { footerHeight: _footerHeight });
+                                     view.dispatch(tr);
+                                 });
